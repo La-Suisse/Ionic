@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mes Fiches</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item [routerLink]="" (click)="OnCLick(item)" *ngFor="let item of items">
+      <ion-label>
+        <h2>{{item.date}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

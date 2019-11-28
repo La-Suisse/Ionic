@@ -1,14 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title style="font-size:30px ;font-family: 'Lobster', cursive;" class="ion-text-center">G S B</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+  <div style="margin-top: 200px;">
+    <ion-item>
+      <ion-input [(ngModel)]="userForm" type="text" placeholder="Identifiant" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="mdpForm" type="password" placeholder="Mot de Passe" values></ion-input>
+      <ion-icon (click)="seConnecter()" name="arrow-forward"></ion-icon>
+    </ion-item>
+
   </div>
 </ion-content>
