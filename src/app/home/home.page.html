@@ -7,12 +7,13 @@
 <ion-content>
   <div style="margin-top: 200px;">
     <ion-item>
-      <ion-input [(ngModel)]="userForm" type="text" placeholder="Identifiant" value=""></ion-input>
+      <ion-input autofocus [(ngModel)]="userForm" type="mail" placeholder="Identifiant" value=""></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input [(ngModel)]="mdpForm" type="password" placeholder="Mot de Passe" values></ion-input>
+      <ion-input (ionBlur)="seConnecter()" (click)="keyboardTest()" [(ngModel)]="mdpForm" type="password"
+        placeholder="Mot de Passe" values>
+      </ion-input>
       <ion-icon (click)="seConnecter()" name="arrow-forward"></ion-icon>
     </ion-item>
-
   </div>
 </ion-content>

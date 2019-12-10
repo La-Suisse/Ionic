@@ -1,18 +1,69 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button text="Retour"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Mes Fiches</ion-title>
+    <ion-title style="font-size:30px ;font-family: 'Lobster', cursive;" class="ion-text-center">G S B</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item [routerLink]="" (click)="OnCLick(item)" *ngFor="let item of items">
-      <ion-label>
-        <h2>{{item.date}}</h2>
+    <ion-item *ngFor="let item of items">
+      <ion-label color="dark">
+        <a style="color: inherit;" data-toggle="collapse" href="#collapse{{item.fiche}}" aria-expanded="false">
+          <h2>{{item.date}}</h2>
+          <p>{{item.etat}}</p>
+          <p *ngIf="item.montant" class="ion-text-right">Remboursement: {{item.montant}}€</p>
+        </a>
+        <div class="collapse" id="collapse{{item.fiche}}">
+          <ion-card class="" translucent="true">
+            <ion-list>
+              <ion-list-header>
+                <h3>Forfait</h3>
+              </ion-list-header>
+              <div *ngFor="let forfaitList of item.forfait">
+                <ion-item *ngFor="let item of forfaitList.valeurs">
+                  <ion-label>{{item.libelle}}({{item.prix}}€)</ion-label>
+                  <ion-badge color="dark">{{item.quantite}}</ion-badge>
+                </ion-item>
+              </div>
+            </ion-list>
+            <ion-list>
+              <ion-list-header>
+                <h3>Hors Forfait</h3>
+              </ion-list-header>
+              <div *ngFor="let forfaitList of item.horsforfait">
+                <ion-item *ngFor="let item of forfaitList.valeurs">
+                  <ion-label>{{item.libelle}}
+                    <p>{{item.date}}</p>
+                  </ion-label>
+                  <ion-badge color="dark">{{item.prix}}€</ion-badge>
+
+
+                </ion-item>
+              </div>
+            </ion-list>
+
+          </ion-card>
+        </div>
       </ion-label>
     </ion-item>
   </ion-list>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button color="dark">
+      <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="end">
+      <ion-fab-button color="dark">
+        <ion-icon name="contrast" (click)="theme()"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="danger" (click)="deco()">
+        <ion-icon name="power"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" (click)="reload()">
+      <ion-icon name="sync"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

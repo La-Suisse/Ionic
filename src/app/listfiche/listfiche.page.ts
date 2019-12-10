@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { HomePageModule } from '../home/home.module';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { AppBack } from '../services/service.module';
+import { AppComponent } from '../app.component';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-listfiche',
@@ -8,17 +13,72 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 })
 export class ListfichePage implements OnInit {
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute) {
+  id: any
+  allfiches: any
+  fichesUser: any
+  message: any
+
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private nativeStorage: NativeStorage, private appService: AppBack, private app: AppComponent, private toastController: ToastController) {
     this.activeRoute.queryParams.subscribe(params => {
       this.items = this.router.getCurrentNavigation().extras.state;
     });
   }
   items: any;
   ngOnInit() {
+    this.redirect()
   }
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: this.message,
+      duration: 2000
+    });
+    toast.present();
+  }
+  redirect() {
+    if (this.items == undefined) {
+      this.reload()
+      if (this.items == undefined) {
+        this.router.navigate(['home']);
+      }
+    }
+  }
+  reload() {
+    this.nativeStorage.getItem('id')
+      .then(
+        data => {
+          this.id = data
+          console.log(this.id)
+          this.appService
+            .getFiches()
+            .subscribe(
+              data => {
+                this.allfiches = data;
+                console.log(this.allfiches)
+                for (var f of this.allfiches) {
+                  if (f.id == this.id) {
+                    this.items = f.fiches
+                  }
+                }
+              },
+              error => {
+                this.message = "Impossible de récupérer les fiches"
+                this.presentToast()
+              }
+            );
+        },
+        error => {
+          this.message = "Impossible de récupérer votre ID"
+          this.presentToast()
+        }
+      );
 
-  OnCLick(fiche) {
-    let param: NavigationExtras = { state: fiche };
-    this.router.navigate(['/ficheinfos'], param);
+  }
+  deco() {
+    this.router.navigate(['home']);
+    this.nativeStorage.remove('id')
+  }
+  theme() {
+    this.nativeStorage.setItem('theme', "dark")
+    this.app.blackWhite()
   }
 }

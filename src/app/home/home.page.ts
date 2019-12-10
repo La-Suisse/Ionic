@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AppBack } from '../services/service.module';
 import { Router, NavigationExtras } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-home',
@@ -19,8 +20,10 @@ export class HomePage {
   allfiches;
   fichesUser;
   etat = "identifiants inccorect1";
+  theme = "";
+  id: any
 
-  constructor(private router: Router, private appService: AppBack, public toastController: ToastController) {
+  constructor(private router: Router, private appService: AppBack, public toastController: ToastController, private nativeStorage: NativeStorage) {
   }
 
   async presentToast() {
@@ -41,6 +44,7 @@ export class HomePage {
       .getUsers()
       .subscribe(data => (this.allUsers = data));
   }
+
   getFiches() {
     this.appService
       .getFiches()
@@ -48,30 +52,37 @@ export class HomePage {
   }
 
   seConnecter() {
-
     var identifiantTest = "salut";
     var mdpTest = "t"
     var users = this.allUsers
-    for (var i = 0; i < 4; i++)
-      if (users[i].identifiant == this.userForm) {
-        identifiantTest = users[i].identifiant
-        if (users[i].motDePasse == this.mdpForm)
-          mdpTest = users[i].identifiant
-        this.type = users[i].type
-
-        this.fichesUser = this.allfiches[i].fiches
+    for (let u of users) {
+      if (u.identifiant == this.userForm) {
+        identifiantTest = u.identifiant
+        if (u.motDePasse == this.mdpForm) {
+          mdpTest = u.identifiant
+          this.type = u.type
+          this.nativeStorage.setItem('id', u.id)
+          for (var f of this.allfiches) {
+            if (f.id == u.id) {
+              this.fichesUser = f.fiches
+            }
+          }
+        }
       }
+    }
     if (identifiantTest == mdpTest && this.type == "Visiteur") {
-      this.etat = "identifiants correcte"
+      this.etat = "Connecté"
       this.presentToast();
-
       let param: NavigationExtras = { state: this.fichesUser };
       this.router.navigate(['/listfiche'], param);
+      this.userForm = ""
+      this.mdpForm = ""
     }
     else {
-      this.etat = "identifiants inccorect lol";
+      this.mdpForm = ""
+      this.etat = "Tentative de connexion...";
       this.presentToast();
     }
-
   }
+
 }

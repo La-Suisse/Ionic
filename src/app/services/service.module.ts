@@ -7,10 +7,10 @@ export class AppBack {
     constructor(private http: HttpClient) { }
 
     getUsers(): any {
-        return this.http.get("http://127.0.0.1:8000/apiusers");
+        return this.http.get("http://192.168.135.201/public/index.php/apiusers");
     }
 
     getFiches(): any {
-        return this.http.get("http://127.0.0.1:8000/apifiches");
+        return this.http.get("http://192.168.135.201/public/index.php/apifiches");
     }
 }
