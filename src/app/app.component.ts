@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private keyboard: Keyboard
   ) {
     this.initializeApp();
   }
@@ -29,6 +31,7 @@ export class AppComponent {
   blackWhite() {
     if (this.theme == "") {
       this.theme = "dark"
+      //this.keyboard.setKeyboardStyle("dark")
     }
     else {
       this.theme = "";

@@ -5,6 +5,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { AppBack } from '../services/service.module';
 import { AppComponent } from '../app.component';
 import { ToastController } from '@ionic/angular';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+
 
 @Component({
   selector: 'app-listfiche',
@@ -18,7 +20,14 @@ export class ListfichePage implements OnInit {
   fichesUser: any
   message: any
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private nativeStorage: NativeStorage, private appService: AppBack, private app: AppComponent, private toastController: ToastController) {
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private nativeStorage: NativeStorage,
+    private appService: AppBack,
+    private app: AppComponent,
+    private toastController: ToastController,
+    private keyboard: Keyboard) {
     this.activeRoute.queryParams.subscribe(params => {
       this.items = this.router.getCurrentNavigation().extras.state;
     });
@@ -79,6 +88,7 @@ export class ListfichePage implements OnInit {
   }
   theme() {
     this.nativeStorage.setItem('theme', "dark")
-    this.app.blackWhite()
+    this.app.blackWhite();
+    //this.keyboard.setKeyboardStyle('dark');
   }
 }

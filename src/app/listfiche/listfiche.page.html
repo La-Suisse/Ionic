@@ -17,7 +17,7 @@
           <ion-card class="" translucent="true">
             <ion-list>
               <ion-list-header>
-                <h3>Forfait</h3>
+                <h2>Forfait</h2>
               </ion-list-header>
               <div *ngFor="let forfaitList of item.forfait">
                 <ion-item *ngFor="let item of forfaitList.valeurs">
@@ -28,7 +28,7 @@
             </ion-list>
             <ion-list>
               <ion-list-header>
-                <h3>Hors Forfait</h3>
+                <h2>Hors Forfait</h2>
               </ion-list-header>
               <div *ngFor="let forfaitList of item.horsforfait">
                 <ion-item *ngFor="let item of forfaitList.valeurs">
@@ -36,12 +36,9 @@
                     <p>{{item.date}}</p>
                   </ion-label>
                   <ion-badge color="dark">{{item.prix}}€</ion-badge>
-
-
                 </ion-item>
               </div>
             </ion-list>
-
           </ion-card>
         </div>
       </ion-label>

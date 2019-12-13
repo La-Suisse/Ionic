@@ -3,6 +3,10 @@ import { AppBack } from '../services/service.module';
 import { Router, NavigationExtras } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
+import { AppComponent } from '../app.component';
+
 
 @Component({
   selector: 'app-home',
@@ -23,7 +27,14 @@ export class HomePage {
   theme = "";
   id: any
 
-  constructor(private router: Router, private appService: AppBack, public toastController: ToastController, private nativeStorage: NativeStorage) {
+  constructor(
+    private router: Router,
+    private appService: AppBack,
+    public toastController: ToastController,
+    private nativeStorage: NativeStorage,
+    private keyboard: Keyboard,
+    private themeDetection: ThemeDetection,
+    private app: AppComponent, ) {
   }
 
   async presentToast() {
@@ -37,6 +48,10 @@ export class HomePage {
   ngOnInit() {
     this.getUsers();
     this.getFiches();
+    this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+      console.log(res);
+      this.app.blackWhite();
+    })
   }
 
   getUsers() {
