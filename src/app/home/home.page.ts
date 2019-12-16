@@ -25,7 +25,9 @@ export class HomePage {
   fichesUser;
   etat = "identifiants inccorect1";
   theme = "";
-  id: any
+  id: any;
+  alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  cle = "41lac27ga35";
 
   constructor(
     private router: Router,
@@ -73,7 +75,7 @@ export class HomePage {
     for (let u of users) {
       if (u.identifiant == this.userForm) {
         identifiantTest = u.identifiant
-        if (u.motDePasse == this.mdpForm) {
+        if (u.motDePasse == this.cryptageVigenere(this.mdpForm)) {
           mdpTest = u.identifiant
           this.type = u.type
           this.nativeStorage.setItem('id', u.id)
@@ -100,4 +102,49 @@ export class HomePage {
     }
   }
 
+  cryptageVigenere(mot: string) {
+    let leMotCode = "";
+    let longueurCle = leMotCode.length;
+    let longueurMot = mot.length;
+    let tmp = 0;
+    let i = 0;
+
+    while (i < longueurMot) {
+      leMotCode += this.cryptageLettre(mot[i], this.cle[tmp]);
+      tmp++;
+      if (tmp == longueurCle) {
+        tmp = 0;
+      }
+      i++;
+    }
+    return leMotCode;
+  }
+
+  rangDansAlphabet(lettre: string) {
+    let N = this.alphabet.length;
+    let j = 0;
+    let rang = 0;
+    while (j < N) {
+      if (lettre == this.alphabet[j]) {
+        rang = j;
+      }
+      j++;
+    }
+    return rang;
+  }
+
+  lettreAlphabet(rang: number) {
+    let N = this.alphabet.length;
+    if (rang >= N) {
+      rang -= N;
+    }
+    if (rang < 0) {
+      rang += N;
+    }
+    return this.alphabet[rang];
+  }
+
+  cryptageLettre(lettre: string, cle: string) {
+    return this.lettreAlphabet(this.rangDansAlphabet(lettre) + this.rangDansAlphabet(cle));
+  }
 }

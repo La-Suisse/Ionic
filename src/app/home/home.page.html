@@ -1,19 +1,18 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title style="font-size:30px ;font-family: 'Lobster', cursive;" class="ion-text-center">G S B</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title style="font-size:30px ;font-family: 'Lobster', cursive;" class="ion-text-center">G S B</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div style="margin-top: 200px;">
-    <ion-item>
-      <ion-input autofocus [(ngModel)]="userForm" type="mail" placeholder="Identifiant" value=""></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input (ionBlur)="seConnecter()" (click)="keyboardTest()" [(ngModel)]="mdpForm" type="password"
-        placeholder="Mot de Passe" values>
-      </ion-input>
-      <ion-icon (click)="seConnecter()" name="arrow-forward"></ion-icon>
-    </ion-item>
-  </div>
+    <div style="margin-top: 200px;">
+        <ion-item>
+            <ion-input autofocus [(ngModel)]="userForm" type="mail" placeholder="Identifiant" value=""></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input (ionBlur)="seConnecter()" [(ngModel)]="mdpForm" type="password" placeholder="Mot de Passe" values>
+            </ion-input>
+            <ion-icon (click)="seConnecter()" name="arrow-forward"></ion-icon>
+        </ion-item>
+    </div>
 </ion-content>
